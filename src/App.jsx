@@ -10,7 +10,12 @@ function App() {
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-		let inputValues = value.trim().split(/\n/);
+    let inputValues;
+    if(name === 'userid') {
+      inputValues = value.toLowerCase().split(/\n/)
+    } else {
+      inputValues = value.split(/\n/);
+    }
 
 		inputValues = inputValues.map((val) => val.trim()); 
 
@@ -113,14 +118,12 @@ function App() {
 		setJsonData(jsonList);
 	};
 
-  console.log(jsonData)
-
 	return (
-			<div className="flex justify-between gap-2 bg-slate-200">
-        <div className="w-1/2 p-2 space-y-2">
+			<div className="flex justify-between gap-2 min-h-screen bg-slate-200">
+        <div className="w-1/3 p-2 space-y-2">
           <div className="space-x-2">
             <label htmlFor="isUsersTable">Is Users Table?</label>
-            <input type="checkbox" name="isUsersTable" id="isUsersTable" value={isUsersTable} onChange={() => setIsUsersTable(!isUsersTable)} />
+            <input type="checkbox" name="isUsersTable" id="isUsersTable" value={isUsersTable} onChange={() => setIsUsersTable(!isUsersTable)} className="size-4" />
           </div>
 
           <div className="flex flex-col gap-2">
@@ -128,8 +131,8 @@ function App() {
             <textarea
               name="userid"
               id="userid"
-              rows={20}
-              value={tableData.userid.join("\n")}
+              rows={12}
+              value={tableData.userid}
               onChange={handleChange}
               className="w-full border border-slate-600 rounded-lg p-2 text-sm"
             />
@@ -140,8 +143,8 @@ function App() {
             <textarea
               name="username"
               id="username"
-              rows={20}
-              value={tableData.username.join("\n")}
+              rows={12}
+              value={tableData.username}
               onChange={handleChange}
               className="w-full border border-slate-600 rounded-lg p-2 text-sm"
             />
@@ -152,11 +155,11 @@ function App() {
           </div>
         </div>
 
-				<div className="w-1/2 border-l border-slate-400 flex flex-col gap-4 p-2">
+				<div className="w-2/3 border-l border-slate-400 flex flex-col gap-4 p-2">
 					{jsonData?.length > 0 && jsonData.map((i, index) => (
             <div key={index} className="flex gap-1">
               <p>{index + 1}</p>
-              <div className="bg-white p-2">
+              <div className="bg-white rounded-lg p-2">
                 {JSON.stringify(i)}
               </div>
             </div>
